@@ -10,6 +10,7 @@ public class AuthController(IAuthService authService) : ControllerBase
 {
     private readonly IAuthService _authService = authService;
 
+
     [HttpPost("signup")]
     public async Task<IActionResult> SignUp([FromBody] SignUpFormData formData)
     {

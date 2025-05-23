@@ -19,22 +19,20 @@ builder.Services.AddCors(options =>
         });
 });
 
+builder.Services.AddHttpClient();
+
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddGrpcClient<AccountGrpcService.AccountGrpcServiceClient>(x =>
 {
     x.Address = new Uri(builder.Configuration["Providers:AccountServiceProvider"]!);
-})
-    .ConfigurePrimaryHttpMessageHandler(() =>
-    {
-        return new GrpcWebHandler(GrpcWebMode.GrpcWeb, new HttpClientHandler());
-    });
-
+});
+    
 var app = builder.Build();
 app.MapOpenApi();
 app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ventixe AuthServiceProvider");
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Ventixe AuthServiceProvider API");
     c.RoutePrefix = string.Empty; 
 });
 
