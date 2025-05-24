@@ -94,16 +94,21 @@ public class AuthService(AccountGrpcService.AccountGrpcServiceClient accountClie
             };
 
             var json = JsonConvert.SerializeObject(tokenRequest);
-            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
 
+            Console.WriteLine($"TokenRequest JSON: {json}");
+            Console.WriteLine($"TokenServiceUrl: {tokenServiceUrl}");
+
+            var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
             var response = await _httpClient.PostAsync($"{tokenServiceUrl}/api/Auth/token", content);
+
+            Console.WriteLine($"TokenServiceProvider HTTP Status: {response.StatusCode}");
+
+            var responseContent = await response.Content.ReadAsStringAsync();
+            Console.WriteLine($"TokenServiceProvider Response: {responseContent}");
 
             if (response.IsSuccessStatusCode)
             {
-                var responseContent = await response.Content.ReadAsStringAsync();
-
                 var tokenResponse = JsonConvert.DeserializeObject<TokenResponse>(responseContent);
-
                 return (tokenResponse?.Succeeded ?? false, tokenResponse?.AccessToken);
             }
 
@@ -115,4 +120,5 @@ public class AuthService(AccountGrpcService.AccountGrpcServiceClient accountClie
             return (false, null);
         }
     }
+
 }

@@ -37,11 +37,4 @@ public class AuthController(IAuthService authService) : ControllerBase
             : Unauthorized(result.Message);
     }
 
-    //[HttpPost("signout")]
-    //public async Task<IActionResult> SignOutUser()
-    //{
-    //    await HttpContext.SignOutAsync();
-    //    return Ok(new { message = "Signed out" });
-    //}
-
 }
