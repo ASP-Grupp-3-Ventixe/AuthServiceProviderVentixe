@@ -99,7 +99,7 @@ public class AuthService(AccountGrpcService.AccountGrpcServiceClient accountClie
             Console.WriteLine($"TokenServiceUrl: {tokenServiceUrl}");
 
             var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
-            var response = await _httpClient.PostAsync($"{tokenServiceUrl}/api/Auth/token", content);
+            var response = await _httpClient.PostAsync($"{tokenServiceUrl}api/Auth/token", content);
 
             Console.WriteLine($"TokenServiceProvider HTTP Status: {response.StatusCode}");
 
