@@ -88,15 +88,15 @@ public class AuthService(AccountGrpcService.AccountGrpcServiceClient accountClie
             var tokenServiceUrl = _configuration["Providers:TokenServiceProvider"];
             var tokenRequest = new
             {
-                userId = userId,
-                email = email,
+                userId,
+                email,
                 role = "User"
             };
 
             var json = JsonConvert.SerializeObject(tokenRequest);
             var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
 
-            var response = await _httpClient.PostAsync($"{tokenServiceUrl}/api/GenerateToken", content);
+            var response = await _httpClient.PostAsync($"{tokenServiceUrl}/api/Auth/token", content);
 
             if (response.IsSuccessStatusCode)
             {

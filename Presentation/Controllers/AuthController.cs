@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
 using Presentation.Models;
 using Presentation.Services;
 
@@ -35,4 +36,12 @@ public class AuthController(IAuthService authService) : ControllerBase
             ? Ok(result)
             : Unauthorized(result.Message);
     }
+
+    //[HttpPost("signout")]
+    //public async Task<IActionResult> SignOutUser()
+    //{
+    //    await HttpContext.SignOutAsync();
+    //    return Ok(new { message = "Signed out" });
+    //}
+
 }
