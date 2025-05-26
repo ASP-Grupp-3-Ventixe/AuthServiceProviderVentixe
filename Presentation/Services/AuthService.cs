@@ -9,6 +9,7 @@ public interface IAuthService
 {
     Task<SignUpResult> SignUpAsync(SignUpFormData formData);
     Task<SignInResult> SignInAsync(SignInFormData formData);
+
 }
 
 public class AuthService(AccountGrpcService.AccountGrpcServiceClient accountClient, HttpClient httpClient, IConfiguration configuration) : IAuthService

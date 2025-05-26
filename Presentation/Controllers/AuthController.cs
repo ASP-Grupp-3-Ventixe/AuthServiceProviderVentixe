@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Models;
 using Presentation.Services;
@@ -36,5 +37,17 @@ public class AuthController(IAuthService authService) : ControllerBase
             ? Ok(result)
             : Unauthorized(result.Message);
     }
+
+    [HttpPost("signout")]
+    [Authorize]
+    public IActionResult SignOut()
+    {
+        var userId = User.FindFirst("sub")?.Value;
+        Console.WriteLine($"User {userId} signed out.");
+
+        return Ok(new { message = "Signed out successfully" });
+    }
+
+
 
 }
