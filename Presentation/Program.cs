@@ -1,6 +1,8 @@
 ﻿using Grpc.Net.Client.Web;
+using Microsoft.OpenApi.Models;
 using Presentation;
 using Presentation.Services;
+using Swashbuckle.AspNetCore.Filters;
 using IAuthService = Presentation.Services.IAuthService;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +10,20 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(o =>
+{
+    o.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1.0",
+        Title = "Auth Service API Documentation",
+        Description = "Official Documentation for Auth Service Provider API."
+    });
+    o.EnableAnnotations();
+    o.ExampleFilters();
+});
+
+builder.Services.AddSwaggerExamplesFromAssemblyOf<Program>();
+
 builder.Services.AddCors(options => {
     options.AddPolicy("AllowAll",
     policy =>
